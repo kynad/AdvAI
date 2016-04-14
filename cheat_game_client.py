@@ -128,5 +128,6 @@ class DemoAgent(Agent):
             return Cheat(claim_cards, cheat_rank, cheat_count)
 
 
-cheat = Game(DemoAgent("Demo 1"), Human("me"))
-cheat.play()
+if __name__ == "__main__":
+    cheat = Game(DemoAgent("Demo 1"), Human("me"))
+    cheat.play()
