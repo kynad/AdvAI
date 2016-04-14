@@ -175,7 +175,7 @@ class CheatGameCardCounter(object):
         it_known = len(filter(lambda card: card.rank == claim.rank, self.it_knowns))
         if claim.count > (4 - my_known):
             return 0
-        return pow(self.unknown_prob, min(claim.count - it_known, 0))
+        return pow(self.unknown_prob, max(claim.count - it_known, 0))
 
     def move(self, my_cards, hand_size, deck_size, pile_size):
         if len(self.my_knowns) < len(my_cards):   # I took cards from either pile or the deck.
