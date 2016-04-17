@@ -73,7 +73,7 @@ class Agent_85(Agent):
         # update the card counting obj and get an estimation on oponnent's claim
         self.card_counter.move(self.cards, opponent_count, deck_count, table_count)
         if last_action == ActionEnum.MAKE_CLAIM:
-            self.action_scores['Call_Cheat'] = (1 - self.card_counter.claim_prob(last_claim)) * 4
+            self.action_scores['Call_Cheat'] = 1 - self.card_counter.claim_prob(last_claim)
 
         # score honest moves
         for move in honest_moves:
@@ -90,9 +90,9 @@ class Agent_85(Agent):
         # mix strategies with p < 0.1 (smaller beacuse it might change to the best one):
         rand = random.random()
         if rand < 0.1:
-            valid_moves = filter(lambda x: self.action_scores[x] > 0, self.action_scores.keys())
+            valid_moves = filter(lambda x: self.action_scores[x] != 0, self.action_scores.keys())
             random.shuffle(valid_moves)
-            action_str = valid_moves[int(rand*10*len(valid_moves))]
+            action_str = valid_moves[0]
 
         # if the actio is Take_Card or Call_Cheat - return it from honest_moves
         if action_str in ['Take_Card', 'Call_Cheat']:
