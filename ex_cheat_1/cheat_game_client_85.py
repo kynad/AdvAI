@@ -155,7 +155,7 @@ class CheatGameCardCounter(object):
         self.it_knowns = list()
         self.pile_knowns = list() #the cards that I actually put into the pile.
     
-    # shouold be called once the cards are dealt.
+    # should be called once the cards are dealt.
     def deal(self, my_cards, initial_card, hand_size, deck_size, pile_size):
         self.total_cards = deck_size + hand_size + pile_size + len(my_cards)
         self.pile_knowns.append(initial_card)   
