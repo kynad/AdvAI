@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{titling}
+\usepackage{cjhebrew}
+
+\usepackage{enumerate}
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+
+\newcommand{\then}{\longrightarrow}
+\renewcommand{\iff}{\longleftrightarrow}
+
+%%% Title = נושאים מתקדמים בבינה מלאכותית - תרגיל 2
+\title{2 \<trgyl> - \<nw/s'ym mtqdmym bbynh ml'kwtyt>}
+%%% Author = דני רובינסקי - 304359276
+\author{304359276 - \<dny rwbynsqy>}
+\date{}
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+	\item { }
+		\begin{enumerate}
+			\item $D \then (B \land C)$
+			\item $C \then (\lnot A \land \lnot B)$
+			\item $D \iff (C \land \lnot A)$
+			\item $(D \land \lnot C) \then A$
+			\item $(\lnot D \then C) \land (D \then \lnot B)$
+			\item $A \then ((\lnot B \land \lnot C) \then D)$
+			\item $((A \land B \land C) \iff \lnot D) \land ((\lnot A \land \lnot B) \then (D \then C))$\\\\
+		\end{enumerate}
+
+
+	\item We'll define the following language:\\
+			Constants: $\{Bill, Analysis, Geometry\}$\\
+			Predicates: $\{Student, Smart, Loves, Takes\}$\\
+			Functions: $\emptyset$\\
+			Variables: $\{x,y\}$
+	\begin{enumerate}
+		\item $\forall x (Student(x) \then Smart(x))$
+		\item $\exists x (Student(x))$
+		\item $\exists x (Student(x) \land Smart(x))$
+		\item $\forall x (Student(x) \then  \exists y (Student(y) \land Loves(x,y)))$
+		\item $\forall x (Student(x) \then \exists y (\lnot(x=y) \land Student(y) \land Loves(x,y)))$
+		\item $\exists x (Student(x) \then \forall y (Student(y) \then Loves(y,x)))$
+		\item $Student(Bill)$
+		\item $(Takes(Bill, Analysis) \lor Takes(Bill, Geometry)) \land \lnot (Takes(Bill, Analysis) \land Takes(Bill, Geometry))$
+		\item $Takes(Bill, Analysis) \land Takes(Bill, Geometry)$
+		\item $\lnot Takes(Bill, Analysis)$
+		\item $\forall x (Student(x) \then \lnot Loves(x, Bill))$\\
+		\end{enumerate}
+                \newpage
+
+
+	\item Visualization of the given kripke model: \begin{minipage}[t]{0.45\linewidth}
+                          \raggedright
+                          \adjustbox{valign=t}{%
+                            \includegraphics[scale=0.75]{advai3}%
+                          }
+                          \medskip
+                      \end{minipage}
+	\begin{enumerate}
+		\item Holds, because $1 \in V(p)$.
+		\item Holds, because $2R2$ and $2 \in V(p)$.
+		\item Holds, because there is no world x, such that 3Rx and hence the statement $\forall x \in W, 3Rx \then x \in V(p)$ is true.
+		\item Doesn't hold, because $3 \notin V(p) \Rightarrow M,2\nVdash\square p$
+		\item Holds, since 2 is the only image of 1 in R, we get that this statement holds iff $M,2\Vdash\Diamond p$, which holds, because $2R2 \land 2 \in V(p)$
+		\item Doesn't hold, because the only neighbor of 1 is 2 and $2 \in V(p)$, so $M,2\nVdash p$.
+		\item Holds, because $2R3 \land 3 \notin V(p)$ and hence $M,3\Vdash \lnot p$.
+		\item Holds. First note that $(p\then p)$ is tautology, so the only verification we need is that $M,2\Vdash\Diamond(p\then p)$. But this means that there is some neighbor of 2 for which the same tautology holds and it holds for any world. Since 2 has neighbors (itself, or 3), both parts of the formula hold in 2 and hence the entire formula holds.
+		\item Doesn't hold. Using the same logic as above, we'd reach to a conclusion that in order for the formula to be true in 3, there must be at least one neighbor of 3. Since that's not the case, the formula is false.\\\\
+	\end{enumerate}
+        \newpage
+
+
+	\item I'm assuming this reads $(\Diamond p) \land (\square \lnot p)$: If the first part is true - there is at least one neighbor not in V(p) and the second part can't be true.\\
+	Otherwise, if the formula reads as $\Diamond (p \land (\square \lnot p))$, then the following model $(W=\{1,2\}, R=\{(1,2)\}, V(p)={2})$ satisfies the formula.\\\\
+
+
+	\item { }
+	\begin{enumerate}
+		\item $(W=\{1,2\}, R=\{(1,2)\}, V(A)=\{1\})$
+		\item Valid. Proof: Given a world w, in which the first part, $\lnot\Diamond A \land \Diamond B$ is true means that $\forall v \in W, wRv \then v \notin V(A) \land \exists u \in W, wRu \land u \in V(B)$. Hence for u, $\lnot A \land B$ is true and so $\Diamond (\lnot A \land B)$ is true in w. This is correct for any $w \in W$ that satisfies the first part. For any w in which the first part if false - the entire formula is always true (due to the properties of the $\then$ operator).
+		\item $(W=\{1,2,3\}, R=\{(1,2),(2,2),(2,3)\}, V(A)=\{3\}$.\\
+			$M,1\Vdash\square\Diamond A$, but $M,1\nVdash\Diamond\square A$, because 2R2 and $2 \notin V(A)$.\\\\
+	\end{enumerate}
+
+
+        \item If R is equivalent, then $\forall w,w' \in W wRw' \iff w'Rw$. Assume $w \in V(\phi)$ for some $w \in W$, then for every $w' \in W$ s.t. $wRw'$, $\Diamond\phi$ holds, because $w'Rw$ and $w \in V(\phi)$. Hence, $\square\Diamond\phi$ holds for every such w, which proves the claim.
+\end{enumerate}
+\end{document}
+
