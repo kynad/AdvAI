@@ -87,12 +87,15 @@ class Agent_85(Agent):
 
         # choose the best score:
         action_str = max(self.action_scores, key=self.action_scores.get)
-        # mix strategies with p < 0.1 (smaller beacuse it might change to the best one):
+        # mix strategies with p < 0.1 (smaller beacuse it might change to the best one)
         rand = random.random()
         if rand < 0.1:
+            # filter out actions with score 0 to avoid doing something forbidden
+            # (like taking card when the deck is empty)
             valid_moves = filter(lambda x: self.action_scores[x] != 0, self.action_scores.keys())
-            random.shuffle(valid_moves)
-            action_str = valid_moves[0]
+            if len(valid_moves) > 0:
+                random.shuffle(valid_moves)
+                action_str = valid_moves[0]
 
         # if the actio is Take_Card or Call_Cheat - return it from honest_moves
         if action_str in ['Take_Card', 'Call_Cheat']:
